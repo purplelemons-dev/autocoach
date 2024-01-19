@@ -1,0 +1,28 @@
+body {
+    background-color: #f5f5f5;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    margin: 4em auto;
+    max-width: 960px;
+    padding: 1em;
+    background-color: darkgray;
+    border-radius: 1em;
+    font-size: large;
+}
+
+select {
+    font-size: inherit;
+}
+input {
+    font-size: inherit;
+}
+button {
+    font-size: inherit;
+}
+

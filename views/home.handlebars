@@ -1,0 +1,21 @@
+<main>
+    <h1>
+        Run Badge Data
+    </h1>
+    <p>
+        <select id="campus">
+            {{#each campus}}
+            <option value="{{this}}">{{this}}</option>
+            {{/each}}
+        </select>
+        <select id="semester">
+            {{#each semester}}
+            <option value="{{this}}">{{this}}</option>
+            {{/each}}
+        </select>
+        <input type="date" id="startDate" />
+    </p>
+    <p>
+        <button id="GBD">Get Badge Data</button>
+    </p>
+</main>
