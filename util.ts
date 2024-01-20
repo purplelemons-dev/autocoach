@@ -187,7 +187,7 @@ export class API {
                     const name = link.textContent?.split(" ");
                     if (!name || !userlink) continue;
                     const firstname = name[0];
-                    const lastname = name[1];
+                    const lastname = name[name.length - 1];
                     const id = new URL(userlink).searchParams.get("id") as string;
                     out.push({ firstname, lastname, id });
                 }
