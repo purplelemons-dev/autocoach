@@ -75,6 +75,7 @@ app.post("/api/badge", (req, res) => {
         }
         //res.write("Working on users...\n");
         const rows = [];
+        console.log("Working on users...");
         for (const user of db.getUsers().sort((a, b) => a.lastname.localeCompare(b.lastname))) {
             let temp = [];
             temp.push(user.firstname);
