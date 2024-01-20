@@ -3,6 +3,7 @@ import { JSDOM } from "jsdom";
 import cookie from "cookie";
 import { writeFileSync, existsSync, readFileSync } from "fs";
 
+const DEBUG = true;
 const baseURL = "https://coachhomeschool.org/blackboard";
 const hourByCampus = {
     McKinney: [1, 2, 3, 4, 5, 6],
@@ -51,7 +52,7 @@ export class API {
     }
 
     login = async () => {
-        if (existsSync("data/creds.json")) {
+        if (existsSync("data/creds.json") && !DEBUG) {
             const creds = JSON.parse(readFileSync("data/creds.json").toString());
             return creds;
         }
