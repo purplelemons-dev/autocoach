@@ -139,6 +139,7 @@ export class API {
             if (!courseElement) throw new Error("Course element is null");
             const link = new URL(courseElement.href);
             const courseid = link.searchParams.get("courseid");
+            console.log(`Getting course ${courseid}`);
             if (!courseid) throw new Error("Course ID is null");
             const out = await fetch(`${baseURL}/course/edit.php?id=${courseid}`, this.fetchOptions())
                 .then(res => res.text())
