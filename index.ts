@@ -77,7 +77,8 @@ app.post("/api/badge", (req, res) => {
         const rows = [];
         console.log("Working on users...");
         for (const user of db.getUsers().sort((a, b) => a.lastname.localeCompare(b.lastname))) {
-            let temp = [];
+            let temp: string[] = [];
+            temp = temp.fill("", 0, campus === "McKinney" ? 14 : 16);
             temp.push(user.firstname);
             temp.push(user.lastname);
             for (const course of user.courses) {
@@ -85,6 +86,7 @@ app.post("/api/badge", (req, res) => {
                 temp[index] = course.coursename;
                 temp[index + 1] = course.roomnum;
             }
+            console.log(temp);
             rows.push(temp);
         }
         await sheets.spreadsheets.values.clear({
