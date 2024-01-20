@@ -101,21 +101,6 @@ app.post("/api/badge", (req, res) => {
             console.log("Sheets Error!");
             console.log(err);
         });
-        // add note in A1
-        sheets.spreadsheets.values.update({
-            spreadsheetId: mckinneySheetID,
-            range: "Sheet1!A1",
-            valueInputOption: "RAW",
-            requestBody: {
-                values: [{ note: new Date().toLocaleString() }] as any
-            }
-        }).then(res => {
-            console.log("Sheets Done!");
-            console.log(res);
-        }).catch(err => {
-            console.log("Sheets Error!");
-            console.log(err);
-        });
         res.write(JSON.stringify(rows, null, 2));
         res.end();
     });
