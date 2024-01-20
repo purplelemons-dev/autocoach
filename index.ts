@@ -56,7 +56,7 @@ app.post("/api/badge", (req, res) => {
 
     api.getHours(campus, semester).then(async hours => {
         for (const { hourid, hourname } of hours) {
-            //res.write(`${hourname}\n`);
+            console.log(`Working on ${hourname}...`)
             const courses = await api.getCoursesFromHour(campus, hourid);
             for (const course of courses) {
                 if (!course) continue;
