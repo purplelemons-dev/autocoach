@@ -78,7 +78,7 @@ class Handler(BaseHTTPRequestHandler):
             message = dumps(cookies)
 
             try:
-                assert len(message) > 1
+                assert len(message["cookies"]) > 1
                 self.send(message)
                 logging.debug(message)
                 logging.debug("message sent")
