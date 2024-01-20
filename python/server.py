@@ -17,7 +17,7 @@ sleep(1)
 
 driver = webdriver.Chrome(options=chrome_options)
 
-logging.basicConfig(force=True, level=logging.DEBUG)
+logging.basicConfig(force=True, level=logging.INFO)
 
 
 def g():
@@ -63,14 +63,14 @@ class Handler(BaseHTTPRequestHandler):
 
             user_key = environ["BB_USERNAME"]
             pass_key = environ["BB_PASSWORD"]
-            logging.debug((user_key, pass_key))
+            logging.info((user_key, pass_key))
 
             username.send_keys(user_key)
             password.send_keys(pass_key)
-            logging.debug("sent keys")
+            logging.info("sent keys")
 
             login.click()
-            logging.debug("clicked login")
+            logging.info("clicked login")
             sleep(0.5)
 
             cookies: list[dict[str, str]] = driver.get_cookies()
@@ -80,12 +80,12 @@ class Handler(BaseHTTPRequestHandler):
             try:
                 assert len(message["cookies"]) > 1
                 self.send(message)
-                logging.debug(message)
-                logging.debug("message sent")
+                logging.info(message)
+                logging.info("message sent")
             except Exception as e:
-                logging.debug(e)
-                logging.debug("Failed to send message")
-                logging.debug(message)
+                logging.info(e)
+                logging.info("Failed to send message")
+                logging.info(message)
                 with open("data/error.html", "w") as f:
                     f.write(driver.page_source)
 
