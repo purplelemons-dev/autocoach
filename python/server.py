@@ -78,14 +78,12 @@ class Handler(BaseHTTPRequestHandler):
             message = dumps(cookies)
 
             try:
-                assert len(message["cookies"]) > 1
+                assert len(cookies["cookies"]) > 1
                 self.send(message)
-                logging.info(message)
                 logging.info("message sent")
             except Exception as e:
                 logging.info(e)
                 logging.info("Failed to send message")
-                logging.info(message)
                 with open("data/error.html", "w") as f:
                     f.write(driver.page_source)
 
@@ -102,5 +100,5 @@ class Handler(BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     server = HTTPServer(("0.0.0.0", 8080), Handler)
-    logging.debug("Starting server on http://localhost:8080")
+    logging.info("Starting server on http://localhost:8080")
     server.serve_forever()

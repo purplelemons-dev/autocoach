@@ -1,6 +1,5 @@
 
 import { JSDOM } from "jsdom";
-import cookie from "cookie";
 import { writeFileSync, existsSync, readFileSync } from "fs";
 
 const DEBUG = true;
@@ -62,7 +61,6 @@ export class API {
 
                 let creds: Record<string, string> = {};
                 const json = JSON.parse(text);
-
                 for (const cookie of json["cookies"]) {
                     creds[cookie.name] = cookie.value;
                 }
