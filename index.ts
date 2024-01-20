@@ -89,7 +89,7 @@ app.post("/api/badge", (req, res) => {
         }
         sheets.spreadsheets.values.update({
             spreadsheetId: mckinneySheetID,
-            range: "Sheet1!A2",
+            range: "Sheet1!A2:N800",
             valueInputOption: "RAW",
             requestBody: {
                 values: rows
