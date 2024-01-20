@@ -100,7 +100,24 @@ app.post("/api/badge", (req, res) => {
         }).catch(err => {
             console.log("Sheets Error!");
             console.log(err);
-        })
+        });
+        sheets.spreadsheets.values.update({
+            spreadsheetId: rockwallSheetID,
+            range: "Sheet1!A1",
+            valueInputOption: "RAW",
+            requestBody: {
+                values: [[{
+                    "note": new Date().toLocaleString()
+                }]]
+            },
+            fields: "note"
+        }).then(res => {
+            console.log("Sheets Done!");
+            console.log(res);
+        }).catch(err => {
+            console.log("Sheets Error!");
+            console.log(err);
+        });
         res.write(JSON.stringify(rows, null, 2));
         res.end();
     });
