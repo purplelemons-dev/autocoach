@@ -1,0 +1,192 @@
+<div class="toast-wrapper mx-auto py-0 fixed-top" role="status" aria-live="polite"></div>
+
+<div id="page-wrapper">
+
+    <div>
+        <a class="sr-only sr-only-focusable" href="#maincontent">Skip to main content</a>
+    </div>
+    <script
+        src="https://coachhomeschool.org/blackboard/lib/javascript.php/1699510508/lib/polyfills/polyfill.js"></script>
+    <script
+        src="https://coachhomeschool.org/blackboard/theme/yui_combo.php?rollup/3.18.1/yui-moodlesimple-min.js"></script>
+    <script
+        src="https://coachhomeschool.org/blackboard/lib/javascript.php/1699510508/lib/javascript-static.js"></script>
+    <script>
+        //<![CDATA[
+        document.body.className += ' jsenabled';
+        //]]>
+    </script>
+
+
+
+    <div id="page" class="container-fluid mt-0">
+        <div id="page-content" class="row">
+            <div id="region-main-box" class="col-12">
+                <section id="region-main" class="col-12 h-100" aria-label="Content">
+                    <div class="login-wrapper">
+                        <div class="login-container">
+                            <div role="main"><span id="maincontent"></span>
+                                <div class="loginform row hastwocolumns">
+                                    <div class="col-lg-6 col-md-12 left-column">
+                                        <div id="loginlogo" class="login-logo">
+                                            <img id="logoimage"
+                                                src="//coachhomeschool.org/blackboard/pluginfile.php/1/theme_moove/logo/1699510508/coach-homeschool-logo.64bb49482064d6.82458860.png"
+                                                class="img-fluid" alt="Welcome to COACH's Blackboard">
+                                            <h1 class="login-heading sr-only">Log in to Welcome to COACH's Blackboard
+                                            </h1>
+                                        </div>
+
+                                        <form class="login-form"
+                                            action="https://coachhomeschool.org/blackboard/login/index.php"
+                                            method="post" id="login">
+                                            <input type="hidden" name="logintoken"
+                                                value="UnYhR4dYzJUnnGCIw9GHRSjksBAdDawT">
+                                            <div class="login-form-username form-group">
+                                                <label for="username" class="sr-only">
+                                                    Username or email
+                                                </label>
+                                                <input type="text" name="username" id="username"
+                                                    class="form-control form-control-lg" value=""
+                                                    placeholder="Username or email" autocomplete="username">
+                                            </div>
+                                            <div class="login-form-password form-group">
+                                                <label for="password" class="sr-only">Password</label>
+                                                <input type="password" name="password" id="password" value=""
+                                                    class="form-control form-control-lg" placeholder="Password"
+                                                    autocomplete="current-password">
+                                            </div>
+                                            <div class="login-form-submit form-group">
+                                                <button class="btn btn-primary btn-block btn-lg" type="submit"
+                                                    id="loginbtn">Log in</button>
+                                            </div>
+                                            <div class="login-form-forgotpassword form-group text-center">
+                                                <a
+                                                    href="https://coachhomeschool.org/blackboard/login/forgot_password.php">Lost
+                                                    password?</a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12 right-column">
+                                        <div class="column-content">
+                                            <div class="login-identityproviders">
+                                                <p class="login-heading text-center">Sign in with</p>
+                                                <a class="btn login-identityprovider-btn btn-block "
+                                                    href="https://coachhomeschool.org/?wdmaction=login_with_moodle&amp;data=MzkxMWhzSUlUS2JwQ2dkOE84WDE1K2QyVFRVMVZ2ZlV4VG8vNnMxaEVCcmtoeVlHeEZFTWt3PT06OjM0YTkzNzAyNDBhOTE3MDMxZGRjMDIyYmIzMjAyYzY3&amp;installdepx=1&amp;confirminstalldep=1">
+                                                    <img src="https://coachhomeschool.org/blackboard/pluginfile.php/1/auth_wdmwpmoodle/wploginbtnicon/0/favicon-coachlogogold.png"
+                                                        alt="" width="24" height="24">
+                                                    Login with website credentials
+                                                </a>
+                                            </div>
+
+                                            <div class="login-divider"></div>
+                                            <form action="https://coachhomeschool.org/blackboard/login/index.php"
+                                                method="post" id="guestlogin">
+                                                <input type="hidden" name="logintoken"
+                                                    value="UnYhR4dYzJUnnGCIw9GHRSjksBAdDawT">
+                                                <input type="hidden" name="username" value="guest">
+                                                <input type="hidden" name="password" value="guest">
+                                                <button class="btn btn-secondary btn-block" type="submit">Access as a
+                                                    guest</button>
+                                            </form>
+
+                                            <div class="d-flex mt-2">
+                                                <button type="button" class="ml-auto btn btn-link" data-modal="alert"
+                                                    data-modal-title-str="[&quot;cookiesenabled&quot;, &quot;core&quot;]"
+                                                    data-modal-content-str="[&quot;cookiesenabled_help_html&quot;, &quot;core&quot;]"><i
+                                                        class="fa fa-question-circle"></i> Cookies notice</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-none">
+    <div class="tool_dataprivacy"><a
+            href="https://coachhomeschool.org/blackboard/admin/tool/dataprivacy/summary.php">Data retention summary</a>
+    </div><a class="mobilelink"
+        href="https://download.moodle.org/mobile?version=2023042401.05&amp;lang=en&amp;iosappid=633359593&amp;androidappid=com.moodle.moodlemobile">Get
+        the mobile app</a>
+    <script>
+        //<![CDATA[
+        var require = {
+            baseUrl: 'https://coachhomeschool.org/blackboard/lib/requirejs.php/1699510508/',
+            // We only support AMD modules with an explicit define() statement.
+            enforceDefine: true,
+            skipDataMain: true,
+            waitSeconds: 0,
+
+            paths: {
+                jquery: 'https://coachhomeschool.org/blackboard/lib/javascript.php/1699510508/lib/jquery/jquery-3.6.4.min',
+                jqueryui: 'https://coachhomeschool.org/blackboard/lib/javascript.php/1699510508/lib/jquery/ui-1.13.2/jquery-ui.min',
+                jqueryprivate: 'https://coachhomeschool.org/blackboard/lib/javascript.php/1699510508/lib/requirejs/jquery-private'
+            },
+
+            // Custom jquery config map.
+            map: {
+                // '*' means all modules will get 'jqueryprivate'
+                // for their 'jquery' dependency.
+                '*': { jquery: 'jqueryprivate' },
+                // Stub module for 'process'. This is a workaround for a bug in MathJax (see MDL-60458).
+                '*': { process: 'core/first' },
+
+                // 'jquery-private' wants the real jQuery module
+                // though. If this line was not here, there would
+                // be an unresolvable cyclic dependency.
+                jqueryprivate: { jquery: 'jquery' }
+            }
+        };
+
+        //]]>
+    </script>
+    <script
+        src="https://coachhomeschool.org/blackboard/lib/javascript.php/1699510508/lib/requirejs/require.min.js"></script>
+    <script>
+        //<![CDATA[
+        M.util.js_pending("core/first");
+        require(['core/first'], function () {
+            require(['core/prefetch'])
+                ;
+            require(["media_videojs/loader"], function (loader) {
+                loader.setUp('en');
+            });;
+
+            M.util.js_pending('theme_boost/loader');
+            require(['theme_boost/loader'], function () {
+                M.util.js_complete('theme_boost/loader');
+            });
+            ;
+
+            ;
+            M.util.js_pending('core/notification'); require(['core/notification'], function (amd) { amd.init(1, []); M.util.js_complete('core/notification'); });;
+            M.util.js_pending('core/log'); require(['core/log'], function (amd) { amd.setConfig({ "level": "warn" }); M.util.js_complete('core/log'); });;
+            M.util.js_pending('core/page_global'); require(['core/page_global'], function (amd) { amd.init(); M.util.js_complete('core/page_global'); });;
+            M.util.js_pending('core/utility'); require(['core/utility'], function (amd) { M.util.js_complete('core/utility'); });
+            M.util.js_complete("core/first");
+        });
+        //]]>
+    </script>
+    <script>
+        //<![CDATA[
+        M.str = { "moodle": { "lastmodified": "Last modified", "name": "Name", "error": "Error", "info": "Information", "yes": "Yes", "no": "No", "cancel": "Cancel", "confirm": "Confirm", "areyousure": "Are you sure?", "closebuttontitle": "Close", "unknownerror": "Unknown error", "file": "File", "url": "URL", "collapseall": "Collapse all", "expandall": "Expand all" }, "repository": { "type": "Type", "size": "Size", "invalidjson": "Invalid JSON string", "nofilesattached": "No files attached", "filepicker": "File picker", "logout": "Logout", "nofilesavailable": "No files available", "norepositoriesavailable": "Sorry, none of your current repositories can return files in the required format.", "fileexistsdialogheader": "File exists", "fileexistsdialog_editor": "A file with that name has already been attached to the text you are editing.", "fileexistsdialog_filemanager": "A file with that name has already been attached", "renameto": "Rename to \"{$a}\"", "referencesexist": "There are {$a} links to this file", "select": "Select" }, "admin": { "confirmdeletecomments": "Are you sure you want to delete the selected comment(s)?", "confirmation": "Confirmation" }, "debug": { "debuginfo": "Debug info", "line": "Line", "stacktrace": "Stack trace" }, "langconfig": { "labelsep": ": " } };
+        //]]>
+    </script>
+    <script>
+        //<![CDATA[
+        (function () {
+            Y.use("moodle-filter_mathjaxloader-loader", function () {
+                M.filter_mathjaxloader.configure({ "mathjaxconfig": "\nMathJax.Hub.Config({\n    config: [\"Accessible.js\", \"Safe.js\"],\n    errorSettings: { message: [\"!\"] },\n    skipStartupTypeset: true,\n    messageStyle: \"none\"\n});\n", "lang": "en" });
+            });
+            M.util.help_popups.setup(Y);
+            M.util.js_pending('random65ab0afe843f42'); Y.on('domready', function () { M.util.js_complete("init"); M.util.js_complete('random65ab0afe843f42'); });
+        })();
+        //]]>
+    </script>
+
+</div>

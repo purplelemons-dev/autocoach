@@ -32,8 +32,12 @@ app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     });
 }));
 app.post("/api/badge", (req, res) => {
-    console.log(JSON.stringify(req.body));
-    res.send("OK");
+    const { campus, startDate } = req.body;
+    const date = new Date(startDate);
+    const semester = "Spring";
+    api.getHours(campus, semester).then((hours) => __awaiter(void 0, void 0, void 0, function* () {
+        res.send(yield api.getCoursesFromHour(campus, hours[0]));
+    }));
 });
 app.listen(EXPRESS_PORT, () => {
     console.log(`Server is running on http://localhost:${EXPRESS_PORT}`);

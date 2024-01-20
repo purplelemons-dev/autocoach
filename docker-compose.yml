@@ -6,4 +6,16 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "30377:3000"
+      - "30377:3344"
+    links:
+      - py
+    depends_on:
+      - py
+
+  py:
+    build:
+      context: ./python
+      dockerfile: Dockerfile
+    ports:
+      - "30388:8080"
+    shm_size: '2gb'
