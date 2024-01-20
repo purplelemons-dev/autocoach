@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { engine } from 'express-handlebars';
 import { API } from './util';
 import { Database, User, Course } from './database';
+import googleapis from 'googleapis';
 
 dotenv.config();
 const PORT = 3344;
@@ -34,10 +35,13 @@ app.get('/', async (req, res) => {
 app.post("/api/badge", (req, res) => {
     const { campus, semester } = req.body;
     // HARDCODED
-    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Content-Type", "application/octet-stream");
+    res.setHeader("Transfer-Encoding", "chunked");
     res.flushHeaders();
+
     api.getHours(campus, semester).then(async hours => {
         for (const { hourid, hourname } of hours) {
+            res.write(`${hourname}\n`);
             const courses = await api.getCoursesFromHour(campus, hourid);
             for (const course of courses) {
                 if (!course) continue;
@@ -54,6 +58,7 @@ app.post("/api/badge", (req, res) => {
                 }
             }
         }
+        res.write("Working on users...\n");
         const out = [];
         for (const user of db.getUsers()) {
             const courses = user.courses;
@@ -71,9 +76,9 @@ app.post("/api/badge", (req, res) => {
             };
             out.push(userObj);
         }
-        res.write(JSON.stringify(out));
         res.end();
     });
+
 });
 
 app.post("/api/hours", (req, res) => {
