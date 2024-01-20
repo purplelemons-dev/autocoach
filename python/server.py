@@ -6,6 +6,7 @@ from os import environ
 from py_dotenv import read_dotenv
 from json import dumps, loads
 from time import sleep
+import logging
 
 chrome_options = Options()
 chrome_options.add_argument("--headless")
@@ -15,6 +16,8 @@ chrome_options.add_experimental_option("detach", True)
 sleep(1)
 
 driver = webdriver.Chrome(options=chrome_options)
+
+logging.basicConfig(level=logging.INFO)
 
 
 def g():
@@ -60,15 +63,15 @@ class Handler(BaseHTTPRequestHandler):
 
             user_key = environ["BB_USERNAME"]
             pass_key = environ["BB_PASSWORD"]
-            print(user_key, pass_key)
+            logging.debug((user_key, pass_key))
 
             username.send_keys(user_key)
             password.send_keys(pass_key)
-            print("sent keys")
+            logging.debug("sent keys")
 
             login.click()
-            print("clicked login")
-            sleep(.5)
+            logging.debug("clicked login")
+            sleep(0.5)
 
             cookies: list[dict[str, str]] = driver.get_cookies()
             cookies = {"cookies": cookies}
@@ -76,11 +79,11 @@ class Handler(BaseHTTPRequestHandler):
 
             try:
                 self.send(message)
-                print(message)
-                print("message sent")
+                logging.debug(message)
+                logging.debug("message sent")
             except Exception as e:
-                print(e)
-                print("Failed to send message")
+                logging.debug(e)
+                logging.debug("Failed to send message")
 
             exit(0)
 
@@ -88,12 +91,12 @@ class Handler(BaseHTTPRequestHandler):
             message = "{'message':'Failed to load page'}"
             self.send(message, 500)
 
-            print("Failed to load page")
+            logging.debug("Failed to load page")
 
         return
 
 
 if __name__ == "__main__":
     server = HTTPServer(("0.0.0.0", 8080), Handler)
-    print("Starting server on http://localhost:8080")
+    logging.debug("Starting server on http://localhost:8080")
     server.serve_forever()
