@@ -157,6 +157,7 @@ export class API {
                     catch (e) {
                         console.log("Error getting room number");
                         console.log(e);
+                        return { courseid, roomnum: "", coursename: "" };
                     }
                 });
             return out;
