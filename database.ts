@@ -1,8 +1,8 @@
 
 export class Course {
     courseid: string = "";
-    roomnum: string = "";
-    coursename: string = "";
+    roomnum: string = "GONE";
+    coursename: string = "Gone - Not on Campus";
     hourname: string = "";
 
     constructor(courseid: string, roomnum: string, coursename: string, hourname:string) {

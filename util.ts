@@ -188,7 +188,7 @@ export class API {
                     const name = link.textContent?.split(" ");
                     if (!name || !userlink) continue;
                     const firstname = name[0];
-                    let lastname = "";
+                    let lastname = ")";
                     let i = 1;
                     while (lastname.includes(")") && i < name.length) {
                         lastname = name[i];
