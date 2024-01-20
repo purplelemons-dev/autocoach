@@ -150,7 +150,7 @@ export class API {
                         const roomnum = (
                             tagcontainer?.querySelector("option[selected]") as HTMLOptionElement
                         ).textContent?.split(`${campus} `)[1] as string;
-                        const coursename = document.querySelector("h1.h2")?.textContent?.slice(0, 31) as string;
+                        const coursename = document.querySelector("h1.h2")?.textContent?.slice(0, 30) + "..." as string;
                         const out = { courseid, roomnum, coursename };
                         return out;
                     }
