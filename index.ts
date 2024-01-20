@@ -51,7 +51,6 @@ app.post("/api/badge", (req, res) => {
     const { campus, semester } = req.body;
     // HARDCODED
     res.setHeader("Content-Type", "application/json");
-    res.setHeader("Transfer-Encoding", "chunked");
     res.setHeader("Connection", "keep-alive");
     res.setHeader("Timeout", "3600");
     res.flushHeaders();
@@ -88,16 +87,15 @@ app.post("/api/badge", (req, res) => {
                 temp[index] = course.coursename;
                 temp[index + 1] = course.roomnum;
             }
-            console.log(temp);
             rows.push(temp);
         }
         await sheets.spreadsheets.values.clear({
             spreadsheetId: mckinneySheetID,
-            range: "Sheet1!A2:N800",
+            range: "Sheet1!A2",
         });
         sheets.spreadsheets.values.update({
             spreadsheetId: mckinneySheetID,
-            range: "Sheet1!A2:N800",
+            range: "Sheet1!A2",
             valueInputOption: "RAW",
             requestBody: {
                 values: rows

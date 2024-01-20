@@ -17,12 +17,11 @@ document.getElementById("GBD").addEventListener("click", async () => {
         alert("There was an error!")
     })
     .then((res) => {
-        if (res.status === 200) {
-            alert("The spreadsheet has been updated!");
-        } else {
+        if (res.status !== 200) {
             alert("There was an error!");
         }
     });
+    alert("The spreadsheet has been updated!")
 });
 
 document.getElementById("hours").addEventListener("click", async () => {
