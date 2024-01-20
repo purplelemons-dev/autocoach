@@ -87,6 +87,10 @@ app.post("/api/badge", (req, res) => {
             }
             rows.push(temp);
         }
+        await sheets.spreadsheets.values.clear({
+            spreadsheetId: mckinneySheetID,
+            range: "Sheet1!A2:N800",
+        });
         sheets.spreadsheets.values.update({
             spreadsheetId: mckinneySheetID,
             range: "Sheet1!A2:N800",
