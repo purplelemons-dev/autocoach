@@ -189,8 +189,8 @@ export class API {
                     if (!name || !userlink) continue;
                     const firstname = name[0];
                     let lastname = "";
-                    let i = 0;
-                    while (!lastname.includes(")") && i < name.length) {
+                    let i = 1;
+                    while (lastname.includes(")") && i < name.length) {
                         lastname = name[i];
                         i++;
                     }
