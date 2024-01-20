@@ -190,8 +190,8 @@ export class API {
                     const firstname = name[0];
                     let lastname = "";
                     let i = 1;
-                    while (!lastname.includes(")")) {
-                        lastname += name[i];
+                    while (!lastname.includes(")") && i < name.length) {
+                        lastname = name[i];
                         i++;
                     }
                     const id = new URL(userlink).searchParams.get("id") as string;
