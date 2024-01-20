@@ -91,7 +91,7 @@ class Handler(BaseHTTPRequestHandler):
             exit(0)
 
         except:
-            message = "{'message':'Failed to load page'}"
+            message = '{"message":"Failed to load page"}'
             self.send(message, 500)
 
             logging.debug("Failed to load page")
