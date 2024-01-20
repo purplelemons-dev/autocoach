@@ -37,23 +37,22 @@ class Handler(BaseHTTPRequestHandler):
         self.data = self.rfile.read(int(self.headers["Content-Length"]))
         data = loads(self.data)
         courseid = data["courseid"]
-        cookies:list = data["cookies"]
+        cookies: list = data["cookies"]
 
         for cookie in cookies:
             driver.add_cookie(cookie)
 
-        driver.get(f"https://coachhomeschool.org/blackboard/course/edit.php?id={courseid}")
+        driver.get(
+            f"https://coachhomeschool.org/blackboard/course/edit.php?id={courseid}"
+        )
 
         sleep(1.5)
-
-        
-        
 
     def do_GET(self):
         try:
             g()
 
-            sleep(1)
+            sleep(1.5)
 
             username = driver.find_element(by=By.ID, value="username")
             password = driver.find_element(by=By.ID, value="password")
@@ -69,6 +68,7 @@ class Handler(BaseHTTPRequestHandler):
 
             login.click()
             print("clicked login")
+            sleep(.5)
 
             cookies: list[dict[str, str]] = driver.get_cookies()
             cookies = {"cookies": cookies}
@@ -76,6 +76,7 @@ class Handler(BaseHTTPRequestHandler):
 
             try:
                 self.send(message)
+                print(message)
                 print("message sent")
             except Exception as e:
                 print(e)

@@ -23,7 +23,7 @@ app.get("/test", async (req, res) => {
 
 app.get('/', async (req, res) => {
     console.log("GET /");
-    console.log(JSON.stringify(api.fetchOptions, null, 2))
+    console.log(JSON.stringify(api.fetchOptions(), null, 2))
     res.render('home', {
         campus: await api.getCampuses(),
         semester: ["Fall", "Spring"],
