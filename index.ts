@@ -36,8 +36,9 @@ app.post("/api/badge", (req, res) => {
     const semester = "Spring";
     api.getHours(campus, semester).then(async hours => {
         const { id, hour } = hours[0];
-        const badge = await api.getCoursesFromHour(campus, id);
-        res.send(JSON.stringify(badge, null, 2));
+        const badge = await (await api.getCoursesFromHour(campus, id));
+        res.setHeader("Content-Type", "application/json");
+        res.send(JSON.stringify(await badge, null, 2));
     });
 });
 

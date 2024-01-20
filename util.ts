@@ -136,24 +136,34 @@ export class API {
                 );
                 return courseElements.map(courseElement => courseElement.querySelector("a.coursename") as unknown as HTMLHyperlinkElementUtils);
             });
-        let courseAndRoom: Record<string, string>[] = [];
-        courseElements.forEach(async courseElement => {
+        const out = courseElements.map(async courseElement => {
             if (!courseElement) throw new Error("Course element is null");
             const link = new URL(courseElement.href);
             const courseid = link.searchParams.get("courseid");
             if (!courseid) throw new Error("Course ID is null");
-            return await fetch(`${baseURL}/course/edit.php?id=${courseid}`, this.fetchOptions())
+            const out = await fetch(`${baseURL}/course/edit.php?id=${courseid}`, this.fetchOptions())
                 .then(res => res.text())
                 .then(html => {
                     const dom = new JSDOM(html);
                     const document = dom.window.document;
-                    const roomnum = (
-                        document.querySelector("#id_tagshdrcontainer")?.querySelector("option[selected]") as HTMLOptionElement
-                    ).innerText.split(`${campus} `)[1];
-                    courseAndRoom.push({ courseid, roomnum });
+                    const tagcontainer = document.querySelector("#id_tags");
+                    try {
+                        const roomnum = (
+                            tagcontainer?.querySelector("option[selected]") as HTMLOptionElement
+                        ).textContent?.split(`${campus} `)[1] as string;
+                        const coursename = document.querySelector("h1.h2")?.textContent?.slice(0,31) as string;
+                        const out = { courseid, roomnum, coursename };
+                        console.log(out);
+                        return out;
+                    }
+                    catch (e) {
+                        console.log("Error getting room number");
+                        console.log(e);
+                    }
                 });
+            return out;
         });
-        return courseAndRoom;
+        return await Promise.all(out);
     }
 
     viewAllUserCourses = async (id: string) => {

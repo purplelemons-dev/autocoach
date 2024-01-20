@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from os import environ
 from py_dotenv import read_dotenv
-from json import dumps
+from json import dumps, loads
 from time import sleep
 
 chrome_options = Options()
@@ -32,6 +32,22 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-length", len(content))
         self.end_headers()
         self.wfile.write(content.encode("utf-8"))
+
+    def do_POST(self):
+        self.data = self.rfile.read(int(self.headers["Content-Length"]))
+        data = loads(self.data)
+        courseid = data["courseid"]
+        cookies:list = data["cookies"]
+
+        for cookie in cookies:
+            driver.add_cookie(cookie)
+
+        driver.get(f"https://coachhomeschool.org/blackboard/course/edit.php?id={courseid}")
+
+        sleep(1.5)
+
+        
+        
 
     def do_GET(self):
         try:
