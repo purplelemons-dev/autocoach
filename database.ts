@@ -1,9 +1,9 @@
 
 export class Course {
-    courseid: string;
-    roomnum: string;
-    coursename: string;
-    hourname: string;
+    courseid: string = "";
+    roomnum: string = "";
+    coursename: string = "";
+    hourname: string = "";
 
     constructor(courseid: string, roomnum: string, coursename: string, hourname:string) {
         this.courseid = courseid;
@@ -14,9 +14,9 @@ export class Course {
 }
 
 export class User {
-    id: string;
-    firstname: string;
-    lastname: string;
+    id: string = "";
+    firstname: string = "";
+    lastname: string = "";
     courses: Course[];
 
     constructor(id: string, firstname: string, lastname: string) {

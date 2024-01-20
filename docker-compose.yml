@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   web:
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
@@ -15,10 +16,10 @@ services:
       - ./data:/app/data
 
   py:
+    restart: always
     build:
       context: ./python
       dockerfile: Dockerfile
     shm_size: '1gb'
-    restart: always
     volumes:
       - ./python/data:/app/data
