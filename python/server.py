@@ -17,7 +17,7 @@ sleep(1)
 
 driver = webdriver.Chrome(options=chrome_options)
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 
 def g():
