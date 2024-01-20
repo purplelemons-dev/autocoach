@@ -20,3 +20,5 @@ services:
       dockerfile: Dockerfile
     shm_size: '1gb'
     restart: always
+    volumes:
+      - ./python/data:/app/data

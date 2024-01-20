@@ -78,12 +78,15 @@ class Handler(BaseHTTPRequestHandler):
             message = dumps(cookies)
 
             try:
+                assert len(message) > 1
                 self.send(message)
                 logging.debug(message)
                 logging.debug("message sent")
             except Exception as e:
                 logging.debug(e)
                 logging.debug("Failed to send message")
+                with open("data/error.html", "w") as f:
+                    f.write(driver.page_source)
 
             exit(0)
 
