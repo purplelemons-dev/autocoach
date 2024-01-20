@@ -36,21 +36,6 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(content.encode("utf-8"))
 
-    def do_POST(self):
-        self.data = self.rfile.read(int(self.headers["Content-Length"]))
-        data = loads(self.data)
-        courseid = data["courseid"]
-        cookies: list = data["cookies"]
-
-        for cookie in cookies:
-            driver.add_cookie(cookie)
-
-        driver.get(
-            f"https://coachhomeschool.org/blackboard/course/edit.php?id={courseid}"
-        )
-
-        sleep(1.5)
-
     def do_GET(self):
         try:
             g()

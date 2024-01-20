@@ -4,12 +4,27 @@ import dotenv from 'dotenv';
 import { engine } from 'express-handlebars';
 import { API } from './util';
 import { Database, User, Course } from './database';
-import googleapis from 'googleapis';
+import { GoogleApis, google, sheets_v4 } from 'googleapis';
 
 dotenv.config();
 const PORT = 3344;
 let api: API;
 let db: Database;
+
+const mckinneySheetID = process.env.MCKINNEY;
+const rockwallSheetID = process.env.ROCKWALL;
+
+const sheets = new sheets_v4.Sheets({
+    auth: new google.auth.GoogleAuth({
+        scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+        keyFile: "google_creds.json",
+    }),
+});
+
+const hourTranslate = (hourname: string) => {
+    const number = parseInt(hourname.split(" ")[1].replace(":", ""));
+    return number * 2;
+};
 
 const app = express();
 app.engine('handlebars', engine());
@@ -35,13 +50,13 @@ app.get('/', async (req, res) => {
 app.post("/api/badge", (req, res) => {
     const { campus, semester } = req.body;
     // HARDCODED
-    res.setHeader("Content-Type", "application/octet-stream");
+    res.setHeader("Content-Type", "event-stream");
     res.setHeader("Transfer-Encoding", "chunked");
     res.flushHeaders();
 
     api.getHours(campus, semester).then(async hours => {
         for (const { hourid, hourname } of hours) {
-            res.write(`${hourname}\n`);
+            //res.write(`${hourname}\n`);
             const courses = await api.getCoursesFromHour(campus, hourid);
             for (const course of courses) {
                 if (!course) continue;
@@ -58,24 +73,34 @@ app.post("/api/badge", (req, res) => {
                 }
             }
         }
-        res.write("Working on users...\n");
-        const out = [];
+        //res.write("Working on users...\n");
+        const rows = [];
         for (const user of db.getUsers()) {
-            const courses = user.courses;
-            const userObj = {
-                name: `${user.firstname} ${user.lastname}`,
-                id: user.id,
-                courses: courses.map(course => {
-                    return {
-                        name: course.coursename,
-                        room: course.roomnum,
-                        id: course.courseid,
-                        hour: course.hourname,
-                    };
-                }),
-            };
-            out.push(userObj);
+            let temp = [];
+            temp.push(user.firstname);
+            temp.push(user.lastname);
+            for (const course of user.courses) {
+                const index = hourTranslate(course.hourname);
+                temp[index] = course.coursename;
+                temp[index + 1] = course.roomnum;
+            }
+            rows.push(temp);
         }
+        sheets.spreadsheets.values.update({
+            spreadsheetId: mckinneySheetID,
+            range: "Sheet1!A2",
+            valueInputOption: "RAW",
+            requestBody: {
+                values: rows
+            }
+        }).then(res => {
+            console.log("Sheets Done!");
+            console.log(res);
+        }).catch(err => {
+            console.log("Sheets Error!");
+            console.log(err);
+        })
+        res.write(JSON.stringify(rows, null, 2));
         res.end();
     });
 

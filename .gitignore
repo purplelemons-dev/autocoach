@@ -3,3 +3,4 @@ package-lock.json
 .env
 data/*
 /test.html
+google_creds.json

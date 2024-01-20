@@ -6,6 +6,7 @@ document.getElementById("GBD").addEventListener("click", async () => {
     const campus = document.querySelector("#campus").value;
     const startDate = document.querySelector("#startDate").value;
     const semester = document.querySelector("#semester").value;
+    alert("The site is now working and it should fill out the spreadsheet in about 2 minutes. Repeated clicks may produce undesired results.");
     await fetch("/api/badge", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

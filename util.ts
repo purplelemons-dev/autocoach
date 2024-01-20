@@ -97,7 +97,6 @@ export class API {
                 ).filter(campusElement => {
                     return campusElement.textContent?.startsWith(`COACH ${campus}`)
                 })[0];
-                console.log(campusSelector.textContent);
                 const hourList = Array.from(
                     campusSelector.querySelectorAll(queryText)
                 ).filter(semesterElement => semesterElement.textContent?.startsWith(semester))[0];
@@ -153,7 +152,6 @@ export class API {
                         ).textContent?.split(`${campus} `)[1] as string;
                         const coursename = document.querySelector("h1.h2")?.textContent?.slice(0, 31) as string;
                         const out = { courseid, roomnum, coursename };
-                        console.log(out);
                         return out;
                     }
                     catch (e) {
@@ -170,7 +168,6 @@ export class API {
         return await fetch(`${baseURL}/user/index.php?id=${courseid}&perpage=1024`, this.fetchOptions())
             .then(res => res.text())
             .then(html => {
-                console.log(html.slice(0, 128));
                 const dom = new JSDOM(html);
                 const document = dom.window.document;
                 const tbody = document.querySelector("tbody");
