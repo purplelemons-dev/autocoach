@@ -11,6 +11,17 @@ document.getElementById("GBD").addEventListener("click", async () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ campus, semester }),
+    })
+    .catch((err) => {
+        console.log(err);
+        alert("There was an error!")
+    })
+    .then((res) => {
+        if (res.status === 200) {
+            alert("The spreadsheet has been updated!");
+        } else {
+            alert("There was an error!");
+        }
     });
 });
 

@@ -9,6 +9,13 @@ const hourByCampus = {
     Rockwall: [0, 1, 2, 3, 4, 5, 6, 7]
 }
 
+const fromCampusName = (name: string) => {
+    return {
+        McKinney: "20",
+        Rockwall: "28",
+    }[name];
+}
+
 export class API {
     creds: Record<string, string> = {};
 
@@ -86,7 +93,7 @@ export class API {
     };
 
     getHours = async (campus: string, semester: string) => {
-        return await fetch(`${baseURL}/course/management.php`, this.fetchOptions())
+        return await fetch(`${baseURL}/course/management.php?categoryid=${fromCampusName(campus)}`, this.fetchOptions())
             .then(res => res.text())
             .then(async html => {
                 const dom = new JSDOM(html);
