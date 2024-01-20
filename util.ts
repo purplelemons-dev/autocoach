@@ -63,9 +63,9 @@ export class API {
                 let creds: Record<string, string> = {};
                 const json = JSON.parse(text);
 
-                (json.cookies as Record<string, string>[]).forEach(cookie => {
+                for (const cookie of json["cookies"]) {
                     creds[cookie.name] = cookie.value;
-                });
+                }
                 writeFileSync("data/creds.json", JSON.stringify(creds, null, 2));
                 return creds;
             });
@@ -152,7 +152,7 @@ export class API {
                         const roomnum = (
                             tagcontainer?.querySelector("option[selected]") as HTMLOptionElement
                         ).textContent?.split(`${campus} `)[1] as string;
-                        const coursename = document.querySelector("h1.h2")?.textContent?.slice(0,31) as string;
+                        const coursename = document.querySelector("h1.h2")?.textContent?.slice(0, 31) as string;
                         const out = { courseid, roomnum, coursename };
                         console.log(out);
                         return out;
