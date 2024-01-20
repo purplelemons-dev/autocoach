@@ -23,19 +23,28 @@ app.get("/test", async (req, res) => {
 
 app.get('/', async (req, res) => {
     console.log("GET /");
+    console.log(JSON.stringify(api.fetchOptions, null, 2))
     res.render('home', {
         campus: await api.getCampuses(),
-        semester: ["Fall", "Spring"]
+        semester: ["Fall", "Spring"],
     });
 });
 
 app.post("/api/badge", (req, res) => {
     const { campus, startDate } = req.body;
-    const date = new Date(startDate);
     // HARDCODED
     const semester = "Spring";
     api.getHours(campus, semester).then(async hours => {
-        res.send(await api.getCoursesFromHour(campus, hours[0]));
+        const { id, hour } = hours[0];
+        const badge = await api.getCoursesFromHour(campus, id);
+        res.send(JSON.stringify(badge, null, 2));
+    });
+});
+
+app.post("/api/hours", (req, res) => {
+    const { campus, semester } = req.body;
+    api.getHours(campus, semester).then(hours => {
+        res.send(JSON.stringify(hours, null, 2));
     });
 });
 

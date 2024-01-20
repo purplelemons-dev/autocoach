@@ -65,6 +65,8 @@ class Handler(BaseHTTPRequestHandler):
                 print(e)
                 print("Failed to send message")
 
+            exit(0)
+
         except:
             message = "{'message':'Failed to load page'}"
             self.send(message, 500)

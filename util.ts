@@ -1,7 +1,7 @@
 
 import { JSDOM } from "jsdom";
 import cookie from "cookie";
-import { writeFileSync } from "fs";
+import { writeFileSync, existsSync, readFileSync } from "fs";
 
 const baseURL = "https://coachhomeschool.org/blackboard";
 const hourByCampus = {
@@ -12,9 +12,11 @@ const hourByCampus = {
 export class API {
     creds: Record<string, string> = {};
 
-    fetchOptions = {
-        headers: {
-            "Cookie": Object.entries(this.creds).map(([key, value]) => `${key}=${value}`).join("; "),
+    fetchOptions = () => {
+        return {
+            headers: {
+                "Cookie": Object.entries(this.creds).map(([key, value]) => `${key}=${value}`).join("; "),
+            }
         }
     }
 
@@ -24,14 +26,14 @@ export class API {
                 this.login().then(cred => {
                     this.creds = cred;
                 }).then(() => {
-                    console.log("Logged in")
+                    console.log(`Logged in, ${JSON.stringify(this.creds, null, 2)}`)
                 });
             }
             catch (e) {
                 console.log("Error logging in");
                 console.log(e);
             }
-        }, 5000);
+        }, 3000);
         setInterval(() => {
             try {
                 this.login().then(cred => {
@@ -49,25 +51,27 @@ export class API {
     }
 
     login = async () => {
+        if (existsSync("data/creds.json")) {
+            const creds = JSON.parse(readFileSync("data/creds.json").toString());
+            return creds;
+        }
         return await fetch(`http://py:8080`)
             .then(async res => {
                 const text = await res.text();
 
-                console.log(res.status);
-
                 let creds: Record<string, string> = {};
                 const json = JSON.parse(text);
-                console.log(JSON.stringify(json, null, 2));
 
                 (json.cookies as Record<string, string>[]).forEach(cookie => {
                     creds[cookie.name] = cookie.value;
                 });
+                writeFileSync("data/creds.json", JSON.stringify(creds, null, 2));
                 return creds;
-            })
+            });
     }
 
     getCampuses = async () => {
-        return await fetch(`https://coachhomeschool.org/`, this.fetchOptions)
+        return await fetch(`https://coachhomeschool.org/`, this.fetchOptions())
             .then(res => res.text())
             .then(html => {
                 const dom = new JSDOM(html);
@@ -83,29 +87,46 @@ export class API {
     };
 
     getHours = async (campus: string, semester: string) => {
-        return await fetch(`${baseURL}/course/management.php`, this.fetchOptions)
+        return await fetch(`${baseURL}/course/management.php`, this.fetchOptions())
             .then(res => res.text())
-            .then(html => {
+            .then(async html => {
                 const dom = new JSDOM(html);
                 const document = dom.window.document;
-                console.log(document.title);
                 const queryText = `li.listitem-category`;
                 const campusSelector = Array.from(
                     document.querySelectorAll(queryText)
                 ).filter(campusElement => {
-                    console.log(campusElement.textContent);
                     return campusElement.textContent?.startsWith(`COACH ${campus}`)
                 })[0];
                 const hourList = Array.from(
                     campusSelector.querySelectorAll(queryText)
                 ).filter(semesterElement => semesterElement.textContent?.startsWith(semester))[0];
-                const hours = Array.from(hourList.querySelector("ul")?.querySelectorAll(queryText) as NodeListOf<HTMLLIElement>);
-                return hours.map(liElement => liElement.querySelector("a")) as unknown as HTMLHyperlinkElementUtils[];
+                const semesterID = hourList.getAttribute("data-id");
+                return await fetch(`${baseURL}/course/management.php?categoryid=${semesterID}`, this.fetchOptions())
+                    .then(res => res.text())
+                    .then(html => {
+                        const dom = new JSDOM(html);
+                        const document = dom.window.document;
+                        // Shortcut bc we already did the work
+                        const hourList = Array.from(document.querySelector(`[data-id='${semesterID}']`)?.querySelectorAll(`li`) as NodeListOf<HTMLLIElement>);
+                        const aElements = hourList.map(hourElement => hourElement.querySelector("a") as Element);
+                        let out: {
+                            id: string,
+                            hour: string,
+                        }[] = [];
+                        aElements.forEach(aElement => {
+                            out.push({
+                                id: aElement.getAttribute("href")?.split("categoryid=")[1] as string,
+                                hour: aElement.textContent as string,
+                            });
+                        });
+                        return out;
+                    });
             });
     }
 
-    getCoursesFromHour = async (campus: string, hour: HTMLHyperlinkElementUtils) => {
-        const courseElements = await fetch(hour.href, this.fetchOptions)
+    getCoursesFromHour = async (campus: string, hourID: string) => {
+        const courseElements = await fetch(`${baseURL}/course/management.php?categoryid=${hourID}`, this.fetchOptions())
             .then(res => res.text())
             .then(html => {
                 const dom = new JSDOM(html);
@@ -121,7 +142,7 @@ export class API {
             const link = new URL(courseElement.href);
             const courseid = link.searchParams.get("courseid");
             if (!courseid) throw new Error("Course ID is null");
-            return await fetch(`${baseURL}/course/edit.php?id=${courseid}`, this.fetchOptions)
+            return await fetch(`${baseURL}/course/edit.php?id=${courseid}`, this.fetchOptions())
                 .then(res => res.text())
                 .then(html => {
                     const dom = new JSDOM(html);

@@ -11,4 +11,15 @@ const doBadge = async () => {
     });
 };
 
+const doHours = async () => {
+    const campus = document.querySelector("#campus").value;
+    const semester = document.querySelector("#semester").value;
+    await fetch("/api/hours", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ campus, semester }),
+    });
+}
+
 document.getElementById("GBD").addEventListener("click", doBadge);
+document.getElementById("hours").addEventListener("click", doHours);
