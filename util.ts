@@ -2,7 +2,7 @@
 import { JSDOM } from "jsdom";
 import { writeFileSync, existsSync, readFileSync } from "fs";
 
-const DEBUG = true;
+const DEBUG = false;
 const baseURL = "https://coachhomeschool.org/blackboard";
 const hourByCampus = {
     McKinney: [1, 2, 3, 4, 5, 6],
@@ -78,9 +78,9 @@ export class API {
                 const campusList = document.querySelector(`ul.sub-menu`);
                 const campuses = campusList?.querySelectorAll(`li`);
                 const campusNames: string[] = [];
-                campuses?.forEach(campus => {
+                for (const campus of campuses as NodeListOf<HTMLLIElement>) {
                     campusNames.push((campus.textContent as string).slice(6));
-                });
+                }
                 return campusNames;
             });
     };
@@ -97,6 +97,7 @@ export class API {
                 ).filter(campusElement => {
                     return campusElement.textContent?.startsWith(`COACH ${campus}`)
                 })[0];
+                console.log(campusSelector.textContent);
                 const hourList = Array.from(
                     campusSelector.querySelectorAll(queryText)
                 ).filter(semesterElement => semesterElement.textContent?.startsWith(semester))[0];
@@ -110,15 +111,15 @@ export class API {
                         const hourList = Array.from(document.querySelector(`[data-id='${semesterID}']`)?.querySelectorAll(`li`) as NodeListOf<HTMLLIElement>);
                         const aElements = hourList.map(hourElement => hourElement.querySelector("a") as Element);
                         let out: {
-                            id: string,
-                            hour: string,
+                            hourid: string,
+                            hourname: string,
                         }[] = [];
-                        aElements.forEach(aElement => {
+                        for (const aElement of aElements) {
                             out.push({
-                                id: aElement.getAttribute("href")?.split("categoryid=")[1] as string,
-                                hour: aElement.textContent as string,
+                                hourid: aElement.getAttribute("href")?.split("categoryid=")[1] as string,
+                                hourname: aElement.textContent as string,
                             });
-                        });
+                        };
                         return out;
                     });
             });
@@ -165,7 +166,35 @@ export class API {
         return await Promise.all(out);
     }
 
-    viewAllUserCourses = async (id: string) => {
-        return await fetch(`${baseURL}/user/profile.php?id=${id}&showallcourses=1`);
+    usersInCourse = async (courseid: string) => {
+        return await fetch(`${baseURL}/user/index.php?id=${courseid}&perpage=1024`, this.fetchOptions())
+            .then(res => res.text())
+            .then(html => {
+                console.log(html.slice(0, 128));
+                const dom = new JSDOM(html);
+                const document = dom.window.document;
+                const tbody = document.querySelector("tbody");
+                if (!tbody) return [];
+                const nonEmpty = tbody.querySelectorAll("tr:not(.emptyrow)");
+                if (!nonEmpty) return [];
+                const userElements = Array.from(nonEmpty);
+                const out: {
+                    firstname: string,
+                    lastname: string,
+                    id: string,
+                }[] = [];
+                for (const tr of userElements) {
+                    const link = tr.querySelector("a") as Element;
+                    link.querySelector("span")?.remove();
+                    const userlink = link.getAttribute("href");
+                    const name = link.textContent?.split(" ");
+                    if (!name || !userlink) continue;
+                    const firstname = name[0];
+                    const lastname = name[1];
+                    const id = new URL(userlink).searchParams.get("id") as string;
+                    out.push({ firstname, lastname, id });
+                }
+                return out;
+            });
     }
 }

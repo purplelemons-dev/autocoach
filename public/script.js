@@ -1,17 +1,19 @@
 
 document.querySelector("#startDate").value = new Date().toISOString().slice(0, 10);
+document.querySelector("#semester").value = "Spring";
 
-const doBadge = async () => {
+document.getElementById("GBD").addEventListener("click", async () => {
     const campus = document.querySelector("#campus").value;
     const startDate = document.querySelector("#startDate").value;
+    const semester = document.querySelector("#semester").value;
     await fetch("/api/badge", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ campus, startDate }),
+        body: JSON.stringify({ campus, semester }),
     });
-};
+});
 
-const doHours = async () => {
+document.getElementById("hours").addEventListener("click", async () => {
     const campus = document.querySelector("#campus").value;
     const semester = document.querySelector("#semester").value;
     await fetch("/api/hours", {
@@ -19,7 +21,12 @@ const doHours = async () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ campus, semester }),
     });
-}
+});
 
-document.getElementById("GBD").addEventListener("click", doBadge);
-document.getElementById("hours").addEventListener("click", doHours);
+document.getElementById("userscourse").addEventListener("click", async () => {
+    await fetch("/api/userscourse", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ course: "33" }),
+    });
+});
