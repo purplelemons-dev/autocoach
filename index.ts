@@ -89,14 +89,15 @@ app.post("/api/badge", (req, res) => {
             }
             rows.push(temp);
         }
+        const range = "Sheet1!A2:Z800";
         const campusSheetID = "McKinney" ? mckinneySheetID : rockwallSheetID;
         await sheets.spreadsheets.values.clear({
             spreadsheetId: campusSheetID,
-            range: "Sheet1!A2",
+            range: range,
         });
         sheets.spreadsheets.values.update({
             spreadsheetId: campusSheetID,
-            range: "Sheet1!A2",
+            range: range,
             valueInputOption: "RAW",
             requestBody: {
                 values: rows
