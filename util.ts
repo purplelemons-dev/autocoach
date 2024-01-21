@@ -145,6 +145,7 @@ export class API {
         const out = courseElements.map(async courseElement => {
             if (!courseElement) throw new Error("Course element is null");
             const link = new URL(courseElement.href);
+            //console.log((courseElement as unknown as Element).textContent)
             const courseid = link.searchParams.get("courseid");
             if (!courseid) throw new Error("Course ID is null");
             const out = await fetch(`${baseURL}/course/edit.php?id=${courseid}`, this.fetchOptions())

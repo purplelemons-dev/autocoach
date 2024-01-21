@@ -70,6 +70,9 @@ app.post("/api/badge", (req, res) => {
                         userObj = new User(user.id, user.firstname, user.lastname);
                         db.addUser(userObj);
                     }
+                    if (userObj.lastname === "Lespreance") {
+                        console.log(userObj);
+                    }
                     userObj.addCourse(courseObj);
                 }
             }
@@ -102,9 +105,9 @@ app.post("/api/badge", (req, res) => {
             requestBody: {
                 values: rows
             }
-        }).then(res => {
+        }).then(() => {
             console.log("Sheets Done!");
-            console.log(res);
+            //console.log(res);
         }).catch(err => {
             console.log("Sheets Error!");
             console.log(err);

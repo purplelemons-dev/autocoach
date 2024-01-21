@@ -5,11 +5,15 @@ export class Course {
     coursename: string = "Gone - Not on Campus";
     hourname: string = "";
 
-    constructor(courseid: string, roomnum: string, coursename: string, hourname:string) {
+    constructor(courseid: string, roomnum: string, coursename: string, hourname: string) {
         this.courseid = courseid;
         this.roomnum = roomnum;
         this.coursename = coursename;
         this.hourname = hourname;
+    }
+
+    toString() {
+        return `${this.coursename} (${this.roomnum})`;
     }
 }
 
@@ -28,6 +32,10 @@ export class User {
 
     addCourse(course: Course) {
         this.courses.push(course);
+    }
+
+    toString() {
+        return `${this.firstname} ${this.lastname} (${this.id}) ${JSON.stringify(this.courses)}`;
     }
 }
 

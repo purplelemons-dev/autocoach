@@ -16,8 +16,8 @@ document.getElementById("GBD").addEventListener("click", async () => {
         alert("There was an error!")
     })
     .then((res) => {
-        if (res.status !== 200) {
-            alert("There was an error!");
+        if (res.status === 200) {
+            alert("Success!");
         }
     });
 });
