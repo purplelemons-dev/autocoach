@@ -69,6 +69,7 @@ class Handler(BaseHTTPRequestHandler):
             except Exception as e:
                 logging.info(e)
                 logging.info("Failed to send message")
+                logging.info(message)
                 with open("data/error.html", "w") as f:
                     f.write(driver.page_source)
 
