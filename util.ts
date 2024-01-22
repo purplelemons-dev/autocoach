@@ -23,6 +23,7 @@ export class API {
         return {
             headers: {
                 "Cookie": Object.entries(this.creds).map(([key, value]) => `${key}=${value}`).join("; "),
+                "Cache-Control": "no-cache",
             }
         }
     }
