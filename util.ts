@@ -78,6 +78,7 @@ export class API {
     }
 
     getCampuses = async () => {
+        return ["McKinney", "Rockwall"];
         return await fetch(`https://coachhomeschool.org/`, this.fetchOptions())
             .then(res => res.text())
             .then(html => {
