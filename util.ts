@@ -161,6 +161,12 @@ export class API {
                         roomnum = (
                             tagcontainer?.querySelector("option[selected]") as HTMLOptionElement
                         ).textContent?.split(`${campus} `)[1] as string;
+                    }
+                    catch (e) {
+                        console.log(`Error getting room number on course ${courseid}`);
+                        console.log(e);
+                    }
+                    try {
                         coursename = document.querySelector("h1.h2")?.textContent as string;
                         if (coursename.length > 30) {
                             coursename = coursename.slice(0, 30) + "...";
@@ -169,7 +175,7 @@ export class API {
                         return out;
                     }
                     catch (e) {
-                        console.log(`Error getting room number on course ${courseid}`);
+                        console.log(`Error getting course name on course ${courseid}`);
                         console.log(e);
                         return { courseid, roomnum, coursename };
                     }
