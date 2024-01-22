@@ -155,11 +155,13 @@ export class API {
                     const dom = new JSDOM(html);
                     const document = dom.window.document;
                     const tagcontainer = document.querySelector("#id_tags");
+                    let roomnum = "";
+                    let coursename = "";
                     try {
-                        const roomnum = (
+                        roomnum = (
                             tagcontainer?.querySelector("option[selected]") as HTMLOptionElement
                         ).textContent?.split(`${campus} `)[1] as string;
-                        let coursename = document.querySelector("h1.h2")?.textContent as string;
+                        coursename = document.querySelector("h1.h2")?.textContent as string;
                         if (coursename.length > 30) {
                             coursename = coursename.slice(0, 30) + "...";
                         }
@@ -169,7 +171,7 @@ export class API {
                     catch (e) {
                         console.log(`Error getting room number on course ${courseid}`);
                         console.log(e);
-                        return { courseid, roomnum: "", coursename: `` };
+                        return { courseid, roomnum, coursename };
                     }
                 });
             return out;
