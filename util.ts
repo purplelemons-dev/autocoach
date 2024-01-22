@@ -23,7 +23,7 @@ export class API {
         return {
             headers: {
                 "Cookie": Object.entries(this.creds).map(([key, value]) => `${key}=${value}`).join("; "),
-                "Cache-Control": "no-cache",
+                "Cache-Control": "no-store",
             }
         }
     }
@@ -150,6 +150,9 @@ export class API {
             //console.log((courseElement as unknown as Element).textContent)
             const courseid = link.searchParams.get("courseid");
             if (!courseid) throw new Error("Course ID is null");
+            if (courseid==="52") {
+                console.log("doing pre-k arts and music");
+            }
             const out = await fetch(`${baseURL}/course/edit.php?id=${courseid}`, this.fetchOptions())
                 .then(res => res.text())
                 .then(html => {
