@@ -56,7 +56,34 @@ app.post("/api/badge", (req, res) => {
     res.flushHeaders();
 
     api.getHours(campus, semester).then(async hours => {
-        for (const { hourid, hourname } of hours) {
+        if (!hours) return;
+        let newHours: {
+            hourid: string;
+            hourname: string;
+        }[] = [];
+        if (campus === "McKinney") {
+            newHours = [
+                { hourid: "47", hourname: "Hour 1:" },
+                { hourid: "49", hourname: "Hour 2:" },
+                { hourid: "50", hourname: "Hour 3:" },
+                { hourid: "51", hourname: "Hour 4:" },
+                { hourid: "52", hourname: "Hour 5:" },
+                { hourid: "53", hourname: "Hour 6:" },
+            ]
+        }
+        else if (campus === "Rockwall") {
+            newHours = [
+                { hourid: "57", hourname: "Hour 0:" },
+                { hourid: "59", hourname: "Hour 1:" },
+                { hourid: "60", hourname: "Hour 2:" },
+                { hourid: "61", hourname: "Hour 3:" },
+                { hourid: "62", hourname: "Hour 4:" },
+                { hourid: "63", hourname: "Hour 5:" },
+                { hourid: "64", hourname: "Hour 6:" },
+                { hourid: "65", hourname: "Hour 7:" },
+            ]
+        }
+        for (const { hourid, hourname } of newHours) {
             console.log(`Working on ${hourname}...`)
             const courses = await api.getCoursesFromHour(campus, hourid);
             for (const course of courses) {
@@ -99,7 +126,7 @@ app.post("/api/badge", (req, res) => {
             spreadsheetId: campusSheetID,
             range: range,
         });
-        sheets.spreadsheets.values.update({
+        await sheets.spreadsheets.values.update({
             spreadsheetId: campusSheetID,
             range: range,
             valueInputOption: "RAW",
