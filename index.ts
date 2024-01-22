@@ -70,9 +70,6 @@ app.post("/api/badge", (req, res) => {
                         userObj = new User(user.id, user.firstname, user.lastname);
                         db.addUser(userObj);
                     }
-                    if (userObj.lastname === "Lespreance") {
-                        console.log(userObj);
-                    }
                     userObj.addCourse(courseObj);
                 }
             }

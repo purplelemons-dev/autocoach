@@ -14,7 +14,7 @@ services:
       - py
     volumes:
       - ./data:/app/data
-    shm_size: '1gb'
+    shm_size: '4gb'
 
   py:
     restart: always
