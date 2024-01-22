@@ -49,6 +49,7 @@ app.get('/', async (req, res) => {
 
 app.post("/api/badge", (req, res) => {
     const { campus, semester } = req.body;
+    console.log(`POST /api/badge ${campus} ${semester}`);
     // HARDCODED
     res.setHeader("Content-Type", "application/json");
     res.setHeader("Connection", "keep-alive");
@@ -63,24 +64,24 @@ app.post("/api/badge", (req, res) => {
         }[] = [];
         if (campus === "McKinney") {
             newHours = [
-                { hourid: "47", hourname: "Hour 1:" },
-                { hourid: "49", hourname: "Hour 2:" },
-                { hourid: "50", hourname: "Hour 3:" },
-                { hourid: "51", hourname: "Hour 4:" },
-                { hourid: "52", hourname: "Hour 5:" },
-                { hourid: "53", hourname: "Hour 6:" },
+                { hourid: "47", hourname: "Hour 1: McKinney" },
+                { hourid: "49", hourname: "Hour 2: McKinney" },
+                { hourid: "50", hourname: "Hour 3: McKinney" },
+                { hourid: "51", hourname: "Hour 4: McKinney" },
+                { hourid: "52", hourname: "Hour 5: McKinney" },
+                { hourid: "53", hourname: "Hour 6: McKinney" },
             ]
         }
         else if (campus === "Rockwall") {
             newHours = [
-                { hourid: "57", hourname: "Hour 0:" },
-                { hourid: "59", hourname: "Hour 1:" },
-                { hourid: "60", hourname: "Hour 2:" },
-                { hourid: "61", hourname: "Hour 3:" },
-                { hourid: "62", hourname: "Hour 4:" },
-                { hourid: "63", hourname: "Hour 5:" },
-                { hourid: "64", hourname: "Hour 6:" },
-                { hourid: "65", hourname: "Hour 7:" },
+                { hourid: "57", hourname: "Hour 0: Rockwall" },
+                { hourid: "59", hourname: "Hour 1: Rockwall" },
+                { hourid: "60", hourname: "Hour 2: Rockwall" },
+                { hourid: "61", hourname: "Hour 3: Rockwall" },
+                { hourid: "62", hourname: "Hour 4: Rockwall" },
+                { hourid: "63", hourname: "Hour 5: Rockwall" },
+                { hourid: "64", hourname: "Hour 6: Rockwall" },
+                { hourid: "65", hourname: "Hour 7: Rockwall" },
             ]
         }
         for (const { hourid, hourname } of newHours) {
