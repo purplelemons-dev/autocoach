@@ -119,6 +119,10 @@ app.post("/api/badge", (req, res) => {
         }
         const range = "Sheet1!A2:Z800";
         console.log(`campus: ${campus}`);
+        if (campus !== "McKinney" && campus !== "Rockwall") {
+            console.log("Invalid campus!");
+            return;
+        }
         const campusSheetID = {
             "McKinney": mckinneySheetID as string,
             "Rockwall": rockwallSheetID as string,
