@@ -90,6 +90,7 @@ app.post("/api/badge", (req, res) => {
             rows.push(temp);
         }
         const range = "Sheet1!A2:Z800";
+        console.log(`campus: ${campus}`);
         const campusSheetID = {
             "McKinney": mckinneySheetID as string,
             "Rockwall": rockwallSheetID as string,
