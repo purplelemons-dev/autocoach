@@ -4,10 +4,6 @@ import { writeFileSync, existsSync, readFileSync } from "fs";
 
 const DEBUG = false;
 const baseURL = "https://coachhomeschool.org/blackboard";
-const hourByCampus = {
-    McKinney: [1, 2, 3, 4, 5, 6],
-    Rockwall: [0, 1, 2, 3, 4, 5, 6, 7]
-}
 
 const fromCampusName = (name: string) => {
     return {
@@ -150,7 +146,7 @@ export class API {
             //console.log((courseElement as unknown as Element).textContent)
             const courseid = link.searchParams.get("courseid");
             if (!courseid) throw new Error("Course ID is null");
-            if (courseid==="52") {
+            if (courseid === "52") {
                 console.log("doing pre-k arts and music");
             }
             const out = await fetch(`${baseURL}/course/edit.php?id=${courseid}`, this.fetchOptions())

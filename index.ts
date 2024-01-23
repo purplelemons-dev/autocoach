@@ -13,6 +13,10 @@ let db: Database;
 
 const mckinneySheetID = process.env.MCKINNEY;
 const rockwallSheetID = process.env.ROCKWALL;
+const hourByCampus = {
+    McKinney: [1, 2, 3, 4, 5, 6],
+    Rockwall: [1, 2, 3, 4, 5, 6, 7, 8]
+}
 
 const sheets = new sheets_v4.Sheets({
     auth: new google.auth.GoogleAuth({
@@ -21,8 +25,11 @@ const sheets = new sheets_v4.Sheets({
     }),
 });
 
-const hourTranslate = (hourname: string) => {
-    const number = parseInt(hourname.split(" ")[1].replace(":", ""));
+const hourTranslate = (hourname: string, campus: string) => {
+    let number = parseInt(hourname.split(" ")[1].replace(":", ""));
+    if (campus === "McKinney") {
+        number -= 1;
+    }
     return number * 2;
 };
 
@@ -111,7 +118,7 @@ app.post("/api/badge", (req, res) => {
             temp.push(user.firstname);
             temp.push(user.lastname);
             for (const course of user.courses) {
-                const index = hourTranslate(course.hourname);
+                const index = hourTranslate(course.hourname, campus);
                 temp[index] = course.coursename;
                 temp[index + 1] = course.roomnum;
             }
