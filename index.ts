@@ -27,8 +27,8 @@ const sheets = new sheets_v4.Sheets({
 
 const hourTranslate = (hourname: string, campus: string) => {
     let number = parseInt(hourname.split(" ")[1].replace(":", ""));
-    if (campus === "McKinney") {
-        number -= 1;
+    if (campus === "Rockwall") {
+        number += 1;
     }
     return number * 2;
 };
