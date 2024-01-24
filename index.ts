@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import { engine } from 'express-handlebars';
 import { API } from './util';
 import { Database, User, Course } from './database';
-import { GoogleApis, google, sheets_v4 } from 'googleapis';
+import { google, sheets_v4 } from 'googleapis';
 
 dotenv.config();
 const PORT = 3344;
@@ -110,7 +110,7 @@ app.post("/api/badge", (req, res) => {
             }
         }
         //res.write("Working on users...\n");
-        const rows = [];
+        const rows: any[][] = [];
         console.log("Working on users...");
         for (const user of db.getUsers().sort((a, b) => a.lastname.localeCompare(b.lastname))) {
             let temp: string[] = [];
@@ -134,26 +134,28 @@ app.post("/api/badge", (req, res) => {
             "McKinney": mckinneySheetID as string,
             "Rockwall": rockwallSheetID as string,
         }[campus as "McKinney" | "Rockwall"];
-        await sheets.spreadsheets.values.clear({
+        sheets.spreadsheets.values.clear({
             spreadsheetId: campusSheetID,
             range: range,
+        })
+        .then(() => {
+            sheets.spreadsheets.values.update({
+                spreadsheetId: campusSheetID,
+                range: range,
+                valueInputOption: "RAW",
+                requestBody: {
+                    values: rows
+                }
+            }).then(() => {
+                console.log("Sheets Done!");
+                //console.log(res);
+            }).catch(err => {
+                console.log("Sheets Error!");
+                console.log(err);
+            });
+            res.write(JSON.stringify(rows, null, 2));
+            res.end();
         });
-        sheets.spreadsheets.values.update({
-            spreadsheetId: campusSheetID,
-            range: range,
-            valueInputOption: "RAW",
-            requestBody: {
-                values: rows
-            }
-        }).then(() => {
-            console.log("Sheets Done!");
-            //console.log(res);
-        }).catch(err => {
-            console.log("Sheets Error!");
-            console.log(err);
-        });
-        res.write(JSON.stringify(rows, null, 2));
-        res.end();
     });
 });
 
