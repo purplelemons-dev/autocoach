@@ -138,7 +138,7 @@ app.post("/api/badge", (req, res) => {
             spreadsheetId: campusSheetID,
             range: range,
         });
-        await sheets.spreadsheets.values.update({
+        sheets.spreadsheets.values.update({
             spreadsheetId: campusSheetID,
             range: range,
             valueInputOption: "RAW",
