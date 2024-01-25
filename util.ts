@@ -74,7 +74,7 @@ export class API {
     }
 
     getCampuses = async () => {
-        return ["McKinney", "Rockwall"];
+        //return ["McKinney", "Rockwall"];
         return await fetch(`https://coachhomeschool.org/`, this.fetchOptions())
             .then(res => res.text())
             .then(html => {
@@ -215,8 +215,6 @@ export class API {
                         i++;
                     }
                     const id = new URL(userlink).searchParams.get("id") as string;
-                    if (lastname === "Abbott" || lastname === "Adams")
-                        console.log(`Found ${firstname} ${lastname} (${id})`);
                     out.push({ firstname, lastname, id });
                 }
                 return out;

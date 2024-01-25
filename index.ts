@@ -99,7 +99,6 @@ app.post("/api/badge", (req, res) => {
                 const courseid = course.courseid;
                 const courseObj = new Course(courseid, course.roomnum, course.coursename, hourname);
                 const users = await api.usersInCourse(courseid);
-                console.log(`Length of users: ${users.length}`);
                 for (const user of users) {
                     let userObj = db.getUser(user.id);
                     if (!userObj) {
