@@ -125,6 +125,7 @@ app.post("/api/badge", (req, res) => {
             }
             rows.push(temp);
         }
+        db = new Database();
         const range = "Sheet1!A2:Z800";
         console.log(`campus: ${campus}`);
         if (campus !== "McKinney" && campus !== "Rockwall") {
