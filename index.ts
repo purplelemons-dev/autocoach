@@ -99,6 +99,7 @@ app.post("/api/badge", (req, res) => {
                 const courseid = course.courseid;
                 const courseObj = new Course(courseid, course.roomnum, course.coursename, hourname);
                 const users = await api.usersInCourse(courseid);
+                console.log(`Length of users: ${users.length}`);
                 for (const user of users) {
                     let userObj = db.getUser(user.id);
                     if (!userObj) {
@@ -134,28 +135,28 @@ app.post("/api/badge", (req, res) => {
             "McKinney": mckinneySheetID as string,
             "Rockwall": rockwallSheetID as string,
         }[campus as "McKinney" | "Rockwall"];
-        sheets.spreadsheets.values.clear({
+        await sheets.spreadsheets.values.clear({
             spreadsheetId: campusSheetID,
             range: range,
         })
-        .then(() => {
-            sheets.spreadsheets.values.update({
-                spreadsheetId: campusSheetID,
-                range: range,
-                valueInputOption: "RAW",
-                requestBody: {
-                    values: rows
-                }
-            }).then(() => {
-                console.log("Sheets Done!");
-                //console.log(res);
-            }).catch(err => {
-                console.log("Sheets Error!");
-                console.log(err);
+            .then(async () => {
+                await sheets.spreadsheets.values.update({
+                    spreadsheetId: campusSheetID,
+                    range: range,
+                    valueInputOption: "RAW",
+                    requestBody: {
+                        values: rows
+                    }
+                }).then(() => {
+                    console.log("Sheets Done!");
+                    //console.log(res);
+                }).catch(err => {
+                    console.log("Sheets Error!");
+                    console.log(err);
+                });
+                res.write(JSON.stringify(rows, null, 2));
+                res.end();
             });
-            res.write(JSON.stringify(rows, null, 2));
-            res.end();
-        });
     });
 });
 

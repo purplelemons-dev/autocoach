@@ -215,6 +215,8 @@ export class API {
                         i++;
                     }
                     const id = new URL(userlink).searchParams.get("id") as string;
+                    if (lastname === "Abbott")
+                        console.log(`Found ${firstname} ${lastname} (${id})`);
                     out.push({ firstname, lastname, id });
                 }
                 return out;

@@ -4,3 +4,4 @@ package-lock.json
 data/*
 /test.html
 google_creds.json
+/test/*
