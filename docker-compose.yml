@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   web:
@@ -15,6 +14,7 @@ services:
     volumes:
       - ./data:/app/data
     shm_size: '4gb'
+    tty: true
 
   py:
     restart: always
@@ -24,3 +24,4 @@ services:
     shm_size: '1gb'
     volumes:
       - ./python/data:/app/data
+    tty: true

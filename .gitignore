@@ -1,7 +1,8 @@
 /node_modules/
-package-lock.json
+/package-lock.json
 .env
 data/*
 /test.html
 google_creds.json
 /test/*
+/dist/*

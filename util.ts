@@ -10,7 +10,7 @@ const fromCampusName = (name: string) => {
         McKinney: "20",
         Rockwall: "28",
     }[name];
-}
+};
 
 export class API {
     creds: Record<string, string> = {};
@@ -22,7 +22,7 @@ export class API {
                 "Cache-Control": "no-store",
             }
         }
-    }
+    };
 
     constructor() {
         setTimeout(() => {
@@ -51,8 +51,7 @@ export class API {
                 console.log(e);
             }
         }, 1000 * 60 * 60 * 24);
-
-    }
+    };
 
     login = async () => {
         if (existsSync("data/creds.json") && !DEBUG) {
@@ -71,7 +70,7 @@ export class API {
                 writeFileSync("data/creds.json", JSON.stringify(creds, null, 2));
                 return creds;
             });
-    }
+    };
 
     getCampuses = async () => {
         return ["McKinney", "Rockwall"];
