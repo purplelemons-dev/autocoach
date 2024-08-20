@@ -1,2 +1,2 @@
-py-dotenv
-selenium
+py-dotenv==0.1
+selenium==4.5.0
