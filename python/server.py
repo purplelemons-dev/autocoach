@@ -15,7 +15,9 @@ chrome_options.add_experimental_option("detach", True)
 
 sleep(1)
 
-driver = webdriver.Chrome(options=chrome_options)
+driver = webdriver.Chrome(
+    executable_path="/usr/bin/chromedriver", options=chrome_options
+)
 
 logging.basicConfig(force=True, level=logging.INFO)
 
