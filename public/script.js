@@ -7,7 +7,7 @@ document.getElementById("GBD").addEventListener("click", async () => {
     const semester = document.querySelector("#semester").value;
     await fetch("/api/badge", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify({ campus, semester }),
     })
         .catch((err) => {

@@ -7,7 +7,7 @@ const baseURL = "https://coachhomeschool.org/blackboard";
 
 const fromCampusName = (name: string) => {
     return {
-        McKinney: "20",
+        McKinney: "48",
         Rockwall: "28",
     }[name];
 };
@@ -101,6 +101,7 @@ export class API {
                 ).filter(campusElement => {
                     return campusElement.textContent?.startsWith(`COACH ${campus}`)
                 })[0];
+
                 const hourList = Array.from(
                     campusSelector.querySelectorAll(queryText)
                 ).filter(semesterElement => semesterElement.textContent?.startsWith(semester))[0];

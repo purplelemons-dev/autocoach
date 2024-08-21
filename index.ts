@@ -60,7 +60,7 @@ app.post("/api/badge", (req, res) => {
     // HARDCODED
     res.setHeader("Content-Type", "application/json");
     res.setHeader("Connection", "keep-alive");
-    res.setHeader("Timeout", "3600");
+    res.setHeader("Timeout", "360");
     res.flushHeaders();
 
     api.getHours(campus, semester).then(async hours => {
@@ -71,12 +71,12 @@ app.post("/api/badge", (req, res) => {
         }[] = [];
         if (campus === "McKinney") {
             newHours = [
-                { hourid: "47", hourname: "Hour 1: McKinney" },
-                { hourid: "49", hourname: "Hour 2: McKinney" },
-                { hourid: "50", hourname: "Hour 3: McKinney" },
-                { hourid: "51", hourname: "Hour 4: McKinney" },
-                { hourid: "52", hourname: "Hour 5: McKinney" },
-                { hourid: "53", hourname: "Hour 6: McKinney" },
+                { hourid: "21", hourname: "Hour 1: McKinney" },
+                { hourid: "22", hourname: "Hour 2: McKinney" },
+                { hourid: "23", hourname: "Hour 3: McKinney" },
+                { hourid: "24", hourname: "Hour 4: McKinney" },
+                { hourid: "25", hourname: "Hour 5: McKinney" },
+                { hourid: "26", hourname: "Hour 6: McKinney" },
             ]
         }
         else if (campus === "Rockwall") {
@@ -99,6 +99,7 @@ app.post("/api/badge", (req, res) => {
                 const courseid = course.courseid;
                 const courseObj = new Course(courseid, course.roomnum, course.coursename, hourname);
                 const users = await api.usersInCourse(courseid);
+                //console.log(`DEBUG\tWorking on ${course.coursename}...`);
                 for (const user of users) {
                     let userObj = db.getUser(user.id);
                     if (!userObj) {
