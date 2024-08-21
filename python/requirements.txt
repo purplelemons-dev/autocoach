@@ -1,2 +1,3 @@
-py-dotenv==0.1
-selenium==4.5.0
+py-dotenv
+selenium
+webdriver-manager
