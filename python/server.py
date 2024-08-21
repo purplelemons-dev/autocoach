@@ -1,12 +1,12 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+#from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from os import environ
 from py_dotenv import read_dotenv
-from json import dumps, loads
+from json import dumps#, loads
 from time import sleep
 import logging
 
@@ -19,7 +19,8 @@ chrome_options.add_experimental_option("detach", True)
 sleep(1)
 
 driver = webdriver.Chrome(
-    service=Service(ChromeDriverManager().install()), options=chrome_options
+    service=Service(executable_path="/usr/local/bin/chromedriver"),
+    options=chrome_options,
 )
 
 logging.basicConfig(force=True, level=logging.INFO)
