@@ -7,8 +7,8 @@ const baseURL = "https://coachhomeschool.org/blackboard";
 
 const fromCampusName = (name: string) => {
     return {
-        McKinney: "48",
-        Rockwall: "28",
+        McKinney: "46",
+        //Rockwall: "28",
     }[name];
 };
 

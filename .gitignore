@@ -6,3 +6,5 @@ data/*
 google_creds.json
 /test/*
 /dist/*
+python/.venv
+dist/*

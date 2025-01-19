@@ -16,7 +16,7 @@ document.getElementById("GBD").addEventListener("click", async () => {
         })
         .then((res) => {
             if (res.status === 200) {
-                alert("The site is now working and it should fill out the spreadsheet in about 2 minutes. Repeated clicks may produce undesired results.");
+                alert("The site is now working and it should fill out the spreadsheet in about 2 minutes. Repeated clicks during this period may produce undesired results.");
             }
         });
 });
